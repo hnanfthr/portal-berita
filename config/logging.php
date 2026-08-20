@@ -58,6 +58,11 @@ return [
             'ignore_exceptions' => false,
         ],
 
+        'coralogix' => [
+    'driver' => 'custom',
+    'via' => App\Logging\CoralogixLogger::class,
+],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
