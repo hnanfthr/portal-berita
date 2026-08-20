@@ -16,3 +16,21 @@ jobs:
         run: |
           echo "Memulai proses build dan testing aplikasi..."
           echo "Proses simulasi selesai!"
+
+      - name: Kirim Laporan Manual ke Coralogix
+        run: |
+          curl -X POST "https://api.ap3.coralogix.com/api/v1/logs" \
+          -H "Content-Type: application/json" \
+          -H "private_key: ${{ secrets.CORALOGIX_API_KEY }}" \
+          -d '{
+            "applicationName": "Belajar_CICD",
+            "subsystemName": "GitHub_Actions",
+            "computerName": "github-runner",
+            "logEntries": [
+              {
+                "timestamp": '$(date +%s%3N)',
+                "severity": 3,
+                "text": "Status: SUKSES. Proses CI/CD berhasil berjalan di repositori."
+              }
+            ]
+          }'
