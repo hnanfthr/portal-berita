@@ -1,0 +1,27 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Simulasi Proses Build & Test
+        run: |
+          echo "Memulai proses build dan testing aplikasi..."
+          echo "Proses simulasi selesai!"
+
+      - name: Kirim Laporan ke Coralogix
+        if: always()
+        uses: coralogix/coralogix-github-action@v1
+        with:
+          api_key: ${{ secrets.CORALOGIX_API_KEY }}
+          application_name: 'Belajar_CICD'
+          subsystem_name: 'GitHub_Actions'
+          log_text: 'Proses CI/CD baru saja dijalankan di repositori ini.'
