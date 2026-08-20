@@ -19,18 +19,14 @@ jobs:
 
       - name: Kirim Laporan Manual ke Coralogix
         run: |
-          curl -X POST "https://api.ap3.coralogix.com/api/v1/logs" \
+          curl -X POST "https://ingress.ap3.coralogix.com/logs/v1/singles" \
           -H "Content-Type: application/json" \
-          -H "private_key: ${{ secrets.CORALOGIX_API_KEY }}" \
-          -d '{
-            "applicationName": "Belajar_CICD",
-            "subsystemName": "GitHub_Actions",
-            "computerName": "github-runner",
-            "logEntries": [
-              {
-                "timestamp": '$(date +%s%3N)',
-                "severity": 3,
-                "text": "Status: SUKSES. Proses CI/CD berhasil berjalan di repositori."
-              }
-            ]
-          }'
+          -H "Authorization: Bearer ${{ secrets.CORALOGIX_API_KEY }}" \
+          -d "[{
+            \"applicationName\": \"Belajar_CICD\",
+            \"subsystemName\": \"GitHub_Actions\",
+            \"computerName\": \"github-runner\",
+            \"timestamp\": $(date +%s%3N),
+            \"severity\": 3,
+            \"text\": \"Status: SUKSES. Proses CI/CD berhasil berjalan di repositori.\"
+          }]"
