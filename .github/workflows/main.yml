@@ -16,12 +16,3 @@ jobs:
         run: |
           echo "Memulai proses build dan testing aplikasi..."
           echo "Proses simulasi selesai!"
-
-      - name: Kirim Laporan ke Coralogix
-        if: always()
-        uses: coralogix/coralogix-github-action@v1
-        with:
-          api_key: ${{ secrets.CORALOGIX_API_KEY }}
-          application_name: 'Belajar_CICD'
-          subsystem_name: 'GitHub_Actions'
-          log_text: 'Proses CI/CD baru saja dijalankan di repositori ini.'
